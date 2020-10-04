@@ -2,7 +2,7 @@
 
 到
 https://openweathermap.org
-注册获取你的API_EY和City_ID填入下面代码中
+注册获取你的`API_KEY`和`City_ID`填入下面代码中
 
 ```
 //API_KEY
