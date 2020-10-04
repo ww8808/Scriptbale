@@ -374,7 +374,7 @@ temptext.centerAlignText();
 
 // Bottom Spacer
 widgetHello.addSpacer();
-widgetHello.setPadding(10, 0, 0, 0);
+widgetHello.setPadding(0, 0, 0, 0);
  
 // Background image
 widgetHello.backgroundImage = Image.fromFile(backgroundImageURL);
