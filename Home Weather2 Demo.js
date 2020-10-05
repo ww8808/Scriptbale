@@ -1,27 +1,19 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
-// icon-color: light-gray; icon-glyph: magic;
+// icon-color: purple; icon-glyph: magic;
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
-// icon-color: red; icon-glyph: magic;
+// icon-color: orange; icon-glyph: magic;
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
-// icon-color: deep-purple; icon-glyph: magic;
-// Variables used by Scriptable.
-// These must be at the very top of the file. Do not edit.
-// icon-color: light-gray; icon-glyph: magic;
-// To use, add a parameter to the widget with a format of: image.png|padding-top|text-color
-// The image should be placed in the iCloud Scriptable folder (case-sensitive).
-// The padding-top spacing parameter moves the text down by a set amount.
-// The text color parameter should be a hex value.
+// icon-color: deep-purple; icon-glyph: image;
 
-// For example, to use the image bkg_fall.PNG with a padding of 40 and a text color of red,
-// the parameter should be typed as: bkg_fall.png|40|#ff0000
+// This widget was created by Max Zeryck @mzeryck
 
-// All parameters are required and separated with "|"
-
-// Parameters allow different settings for multiple widget instances.
-
+// Widgets are unique based on the name of the script.
+const filename = Script.name() + ".jpg"
+const files = FileManager.local()
+const path = files.joinPath(files.documentsDirectory(), filename)
 let widgetHello = new ListWidget(); 
 var today = new Date();
 
@@ -30,7 +22,7 @@ var widgetInputRAW = args.widgetParameter;
 try {
 	widgetInputRAW.toString();
 } catch(e) {
-	throw new Error("Please long press the widget and add a parameter.");
+	widgetInputRAW = "50|#ffffff";
 }
 
 var widgetInput = widgetInputRAW.toString();
@@ -219,23 +211,23 @@ const feel_like = curTempObj.feels_like;
 
 // Greetings arrays per time period. 
 var greetingsMorning = [
-    '早上好.靓仔'
-    ];
-    var greetingsNoon = [
-    '中午好.靓仔'
-    ];
-    var greetingsAfternoon = [
-    '下午好.靓仔'
-    ];
-    var greetingsEvening = [
-    '晚上好.靓仔'
-    ];
-    var greetingsNight = [
-    '睡觉时间.靓仔'
-    ];
-    var greetingsLateNight = [
-    '赶紧睡觉!!!'
-    ];
+'早上好.靓仔'
+];
+var greetingsNoon = [
+'中午好.靓仔'
+];
+var greetingsAfternoon = [
+'下午好.靓仔'
+];
+var greetingsEvening = [
+'晚上好.靓仔'
+];
+var greetingsNight = [
+'睡觉时间.靓仔'
+];
+var greetingsLateNight = [
+'赶紧睡觉!!!'
+];
 
 // Holiday customization
 var holidaysByKey = {
@@ -246,7 +238,7 @@ var holidaysByKey = {
 var holidaysByDate = {
 	// month,date: greeting
 	"1,1": "Happy " + (today.getFullYear()).toString() + "!",
-	"10,31": "Happy Halloween!",
+     "10,31": "Happy Halloween!",
 	"12,25": "Merry Christmas!"
 }
 
@@ -308,25 +300,30 @@ if (holidaysByDate[holidayKeyDate]) {
 
 // Try/catch for color input parameter
 try {
-	inputArr[2].toString();
+	inputArr[0].toString();
 } catch(e) {
 	throw new Error("Please long press the widget and add a parameter.");
 }
 
-let themeColor = new Color(inputArr[2].toString());
+let themeColor = new Color(inputArr[0].toString());
 
-/* --------------- */
-/* Assemble Widget */
-/* --------------- */
+if (config.runsInWidget) {
+  let widget = new ListWidget()
+  widget.backgroundImage = files.readImage(path)
+  
+ // You can your own code here to add additional items to the "invisible" background of the widget.
+ /* --------------- */
+ /* Assemble Widget */
+ /* --------------- */
  
-//Top spacing
-widgetHello.addSpacer(10);
- 
-// Greeting label
-let hello = widgetHello.addText(greeting);
-hello.font = Font.regularSystemFont(35);
-hello.textColor = themeColor;
-hello.centerAlignText();
+ //Top spacing
+ widgetHello.addSpacer(10);
+
+ // Greeting label
+ let hello = widgetHello.addText(greeting);
+ hello.font = Font.regularSystemFont(35);
+ hello.textColor = themeColor;
+ hello.centerAlignText();
  
 //Spacing between greeting and date
 widgetHello.addSpacer(10);
@@ -371,13 +368,207 @@ temptext.textColor = themeColor;
 //temptext.textOpacity = (0.5);
 temptext.centerAlignText();
 
+ 
+ // Bottom Spacer
+ widgetHello.addSpacer();
+ widgetHello.setPadding( 0, 0, 0, 0)
+ widgetHello.backgroundImage = widget.backgroundImage
+  Script.setWidget(widgetHello)
+  Script.complete()
 
-// Bottom Spacer
-widgetHello.addSpacer();
-widgetHello.setPadding(10, 0, 0, 0);
+
+/*
+ * The code below this comment is used to set up the invisible widget.
+ * ===================================================================
+ */
+} else {
+  
+  // Determine if user has taken the screenshot.
+  var message
+  message = "开始之前，请返回主屏幕并长按进入编辑模式。滑动到最右边的空白页并截图。"
+  let exitOptions = ["继续","退出以截图"]
+  let shouldExit = await generateAlert(message,exitOptions)
+  if (shouldExit) return
+  
+  // Get screenshot and determine phone size.
+  let img = await Photos.fromLibrary()
+  let height = img.size.height
+  let phone = phoneSizes()[height]
+  if (!phone) {
+    message = "您似乎选择了非iPhone屏幕截图的图像，或者不支持您的iPhone。请使用其他图像再试一次。"
+    await generateAlert(message,["OK"])
+    return
+  }
+  
+  // Prompt for widget size and position.
+  message = "您想要创建什么尺寸的小部件？"
+  let sizes = ["Small","Medium","Large"]
+  let size = await generateAlert(message,sizes)
+  let widgetSize = sizes[size]
+  
+  message = "您想它在什么位置？"
+  message += (height == 1136 ? " (请注意，您的设备仅支持两行小部件，因此中间和底部选项相同。)" : "")
+  
+  // Determine image crop based on phone size.
+  let crop = { w: "", h: "", x: "", y: "" }
+  if (widgetSize == "Small") {
+    crop.w = phone.small
+    crop.h = phone.small
+    let positions = ["Top left","Top right","Middle left","Middle right","Bottom left","Bottom right"]
+    let position = await generateAlert(message,positions)
+    
+    // Convert the two words into two keys for the phone size dictionary.
+    let keys = positions[position].toLowerCase().split(' ')
+    crop.y = phone[keys[0]]
+    crop.x = phone[keys[1]]
+    
+  } else if (widgetSize == "Medium") {
+    crop.w = phone.medium
+    crop.h = phone.small
+    
+    // Medium and large widgets have a fixed x-value.
+    crop.x = phone.left
+    let positions = ["Top","Middle","Bottom"]
+    let position = await generateAlert(message,positions)
+    let key = positions[position].toLowerCase()
+    crop.y = phone[key]
+    
+  } else if(widgetSize == "Large") {
+    crop.w = phone.medium
+    crop.h = phone.large
+    crop.x = phone.left
+    let positions = ["Top","Bottom"]
+    let position = await generateAlert(message,positions)
+    
+    // Large widgets at the bottom have the "middle" y-value.
+    crop.y = position ? phone.middle : phone.top
+  }
+  
+  // Crop image and finalize the widget.
+  let imgCrop = cropImage(img, new Rect(crop.x,crop.y,crop.w,crop.h))
+  
+  message = "您的小部件背景已准备就绪。您想在Scriptable的小部件中使用它还是导出图像？"
+  const exportPhotoOptions = ["在Scriptable中使用","导出图像"]
+  const exportPhoto = await generateAlert(message,exportPhotoOptions)
+  
+  if (exportPhoto) {
+    Photos.save(imgCrop)
+  } else {
+    files.writeImage(path,imgCrop)
+  }
+  
+  Script.complete()
+}
+
+// Generate an alert with the provided array of options.
+async function generateAlert(message,options) {
+  
+  let alert = new Alert()
+  alert.message = message
+  
+  for (const option of options) {
+    alert.addAction(option)
+  }
+  
+  let response = await alert.presentAlert()
+  return response
+}
+
+// Crop an image into the specified rect.
+function cropImage(img,rect) {
+   
+  let draw = new DrawContext()
+  draw.size = new Size(rect.width, rect.height)
+  
+  draw.drawImageAtPoint(img,new Point(-rect.x, -rect.y))  
+  return draw.getImage()
+}
+
+// Pixel sizes and positions for widgets on all supported phones.
+function phoneSizes() {
+  let phones = { 
+ "2688": {
+   "small":  507,
+   "medium": 1080,
+   "large":  1137,
+   "left":  81,
+   "right": 654,
+   "top":    228,
+   "middle": 858,
+   "bottom": 1488
+ },
  
-// Background image
-widgetHello.backgroundImage = Image.fromFile(backgroundImageURL);
+ "1792": {
+   "small":  338,
+   "medium": 720,
+   "large":  758,
+   "left":  54,
+   "right": 436,
+   "top":    160,
+   "middle": 580,
+   "bottom": 1000
+ },
  
-// Set widget
-Script.setWidget(widgetHello);
+ "2436": {
+   "small":  465,
+   "medium": 987,
+   "large":  1035,
+   "left":  69,
+   "right": 591,
+   "top":    213,
+   "middle": 783,
+   "bottom": 1353
+ },
+ 
+ "2208": {
+   "small":  471,
+   "medium": 1044,
+   "large":  1071,
+   "left":  99,
+   "right": 672,
+   "top":    114,
+   "middle": 696,
+   "bottom": 1278
+ },
+ 
+ "1334": {
+   "small":  296,
+   "medium": 642,
+   "large":  648,
+   "left":  54,
+   "right": 400,
+   "top":    60,
+   "middle": 412,
+   "bottom": 764
+ },
+ 
+ "1136": {
+   "small":  282,
+   "medium": 584,
+   "large":  622,
+   "left": 30,
+   "right": 332,
+   "top":  59,
+   "middle": 399,
+   "bottom": 399
+ }
+  }
+  return phones
+}
+
+function ordinalSuffix(input) {
+	if (input % 10 == 1 && date != 11) {
+		return input.toString() + "日";
+	} else if (input % 10 == 2 && date != 12) {
+		return input.toString() + "日";
+	} else if (input % 10 == 3 && date != 13) {
+		return input.toString() + "日";
+	} else {
+		return input.toString() + "日";
+	}
+}
+
+function randomGreeting(greetingArray) {
+	return Math.floor(Math.random() * greetingArray.length);
+}
+
