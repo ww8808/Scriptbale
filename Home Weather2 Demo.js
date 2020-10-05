@@ -317,7 +317,7 @@ if (config.runsInWidget) {
  /* --------------- */
  
  //Top spacing
- widgetHello.addSpacer(10);
+ widgetHello.addSpacer(15);
 
  // Greeting label
  let hello = widgetHello.addText(greeting);
