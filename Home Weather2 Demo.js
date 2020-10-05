@@ -298,6 +298,13 @@ if (holidaysByDate[holidayKeyDate]) {
 	greeting = holidaysByDate[holidayKeyDate];
 }
 
+//Battery Render
+function getBatteryLevel() {
+	const batteryLevel = Device.batteryLevel()
+	const batteryAscii = Math.round(batteryLevel * 100);
+	return batteryAscii + "%";
+  }
+
 // Try/catch for color input parameter
 try {
 	inputArr[0].toString();
@@ -306,6 +313,7 @@ try {
 }
 
 let themeColor = new Color(inputArr[0].toString());
+
 
 if (config.runsInWidget) {
   let widget = new ListWidget()
@@ -316,24 +324,44 @@ if (config.runsInWidget) {
  /* Assemble Widget */
  /* --------------- */
  
+ 
  //Top spacing
- widgetHello.addSpacer(15);
+ widgetHello.addSpacer(10);
 
  // Greeting label
  let hello = widgetHello.addText(greeting);
  hello.font = Font.regularSystemFont(35);
- hello.textColor = themeColor;
- hello.centerAlignText();
+ hello.textColor = new Color('e8ffc1');
+ hello.leftAlignText();
  
 //Spacing between greeting and date
 widgetHello.addSpacer(10);
-  
+
+//define horizontal stack
+let hStack1 = widgetHello.addStack();
+hStack1.layoutHorizontally();
+
+// Centers date line
+hStack1.addSpacer(0)
+
 // Date label in stack
-let datetext = widgetHello.addText(datefull + '\xa0\xa0\xa0\xa0');
+let datetext = hStack1.addText(datefull + '\xa0\xa0\xa0\xa0');
 datetext.font = Font.regularSystemFont(18);
-datetext.textColor = themeColor;
-datetext.textOpacity = (0.8);
-datetext.centerAlignText();
+datetext.textColor = new Color('#a5ecd7');
+datetext.textOpacity = (1);
+datetext.leftAlignText();
+
+// Battery Status in stack
+var battery = " ⚡ " + getBatteryLevel();
+if(Device.isCharging() && !Device.isFullyCharged()){
+  battery = battery + ", 充电中...";
+}
+if(Device.isFullyCharged()){
+  battery = battery +", 已充满电!请拔下电源!";
+}
+let batterytext = hStack1.addText(battery);
+batterytext.font = Font.regularSystemFont(18);
+batterytext.textColor = new Color('a8df65');
 
 //Spacing between date and summary
 widgetHello.addSpacer(10);
@@ -341,35 +369,34 @@ widgetHello.addSpacer(10);
 // Widget feel temp
 let feel = weathername + " today" + "." + " It feels like " + Math.round(feel_like) + "\u2103" + ";" + " the high will be " + Math.round(highTemp) + "\u2103";//"H:"+highTemp+"\u00B0"+" L:"+lowTemp+"\u00B0"
 var hltemptext = widgetHello.addText(feel);
-hltemptext.textColor = themeColor;
+hltemptext.textColor = new Color('#51adcf');
 hltemptext.font = Font.regularSystemFont(12);
-hltemptext.centerAlignText();
+hltemptext.leftAlignText();
 hltemptext.textOpacity = (0.7);
 
 //define horizontal stack
-let hStack = widgetHello.addStack();
-hStack.layoutHorizontally();
+let hStack2 = widgetHello.addStack();
+hStack2.layoutHorizontally();
 
 // Centers weather line
-hStack.addSpacer(90)
+hStack2.addSpacer(0)
 
 //image
 var img = Image.fromFile(await fetchimagelocal(iconData + "_ico"));
  
 //image in stack
-let widgetimg = hStack.addImage(img);
+let widgetimg = hStack2.addImage(img);
 widgetimg.imageSize = new Size(40, 40);
-widgetimg.centerAlignImage();
- 
-//tempeture label in stack
-let temptext = hStack.addText('\xa0\xa0'+ Math.round(curTemp).toString()+"\u2103");
-temptext.font = Font.regularSystemFont(30);
-temptext.textColor = themeColor;
-//temptext.textOpacity = (0.5);
-temptext.centerAlignText();
+widgetimg.leftAlignImage();
 
- 
- // Bottom Spacer
+//tempeture label in stack
+let temptext = hStack2.addText('\xa0\xa0'+ Math.round(curTemp).toString()+"\u2103");
+temptext.font = Font.regularSystemFont(30);
+temptext.textColor = new Color('#0278ae');
+//temptext.textOpacity = (0.5);
+temptext.leftAlignText();
+
+// Bottom Spacer
  widgetHello.addSpacer();
  widgetHello.setPadding( 0, 0, 0, 0)
  widgetHello.backgroundImage = widget.backgroundImage
