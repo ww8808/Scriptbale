@@ -10,7 +10,8 @@ https://openweathermap.org
 let API_WEATHER = "XXXXXXXXXXXXXXXX";//Load Your api here
 let CITY_WEATHER = "XXXXXX";//add your city ID
 ```
-![充电中](https://github.com/xkerwin/Scriptbale-Weather/blob/main/image/charging.PNG?raw=true)
-![充满电](https://github.com/xkerwin/Scriptbale-Weather/blob/main/image/full%20charge.PNG?raw=true)
-<img src="https://github.com/xkerwin/Scriptbale-Weather/blob/main/image/charging.PNG?raw=true" width = "200" height = "400" alt="图片名称" 
+
+<img src="https://github.com/xkerwin/Scriptbale-Weather/blob/main/image/charging.PNG?raw=true" width = "200" height = "400" alt="充电中" 
+align=center>
+<img src="https://github.com/xkerwin/Scriptbale-Weather/blob/main/image/full%20charge.PNG?raw=true" width = "200" height = "400" alt="充满电" 
 align=center>
