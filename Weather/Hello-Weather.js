@@ -60,8 +60,8 @@ if (fm.fileExists(backgroundImageURLInput) == false) {
 var spacing = parseInt(inputArr[1]);
 
 //API_KEY
-let API_WEATHER = "89065f71db2277c83d22a779a34f16a7";//Load Your api here
-let CITY_WEATHER = "1809858";//add your city ID
+let API_WEATHER = "XXXXXXXXXXXXXX";//Load Your api here
+let CITY_WEATHER = "XXXXXX";//add your city ID
 
 //Get storage
 var base_path = "/var/mobile/Library/Mobile Documents/iCloud~dk~simonbs~Scriptable/Documents/weather/";
