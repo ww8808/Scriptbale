@@ -7,10 +7,10 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-purple; icon-glyph: image;
-
-// This widget was created by Max Zeryck @mzeryck
+// This widget was created by Max Zeryck @mzeryck,在原来的基础上增加了更多内容显示（均来自网络收集）
 
 // Widgets are unique based on the name of the script.
+
 const filename = Script.name() + ".jpg"
 const files = FileManager.local()
 const path = files.joinPath(files.documentsDirectory(), filename)
@@ -60,8 +60,8 @@ if (fm.fileExists(backgroundImageURLInput) == false) {
 var spacing = parseInt(inputArr[1]);
 
 //API_KEY
-let API_WEATHER = "89065f71db2XXXXXXXXa779a34f16a7";//Load Your api here
-let CITY_WEATHER = "180XXXX";//add your city ID
+let API_WEATHER = "89065f71db2277c83d22a779a34f16a7";//Load Your api here,填入你自己的API
+let CITY_WEATHER = "1809858";//add your city ID,填入你所在城市的7位数字City ID
 
 //Get storage
 var base_path = "/var/mobile/Library/Mobile Documents/iCloud~dk~simonbs~Scriptable/Documents/weather/";
@@ -339,60 +339,63 @@ if (config.runsInWidget) {
  /* --------------- */
  
  
- //Top spacing
+ //Top spacing,顶部间距
  widgetHello.addSpacer(15);
 
- // Greeting label
+ // Greeting label,问候标签
  let hello = widgetHello.addText(greeting);
- hello.font = Font.boldSystemFont(35);
- hello.textColor = new Color('e8ffc1');
- hello.leftAlignText();
+ hello.font = Font.boldSystemFont(35); //font and size,字体与大小
+ hello.textColor = new Color('e8ffc1'); //font color,字体颜色
+ hello.textOpacity = (1); //opacity,不透明度
+ hello.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
  
-//Spacing between greeting and yearprogress
+//Spacing between greeting and yearprogress,问候标签与年进度行间距
 widgetHello.addSpacer(5);
 
-//define horizontal stack
+//define horizontal stack,创建一个stack，使下面组件都在同一个stack中，布局为横向布局（hStack0）
 let hStack0 = widgetHello.addStack();
 hStack0.layoutHorizontally();
 
-// Centers date line
-hStack0.addSpacer(0)
+// Centers line
+hStack0.addSpacer(0)//Left spacing,向左对齐间距
 
-// Year icon in stack
+// Year icon in stack,年进度图标
 const YearProgressicon = hStack0.addText("◕ ")
-YearProgressicon.font = new Font('Menlo', 12)
-YearProgressicon.textColor = new Color('#a5ecd7')
-YearProgressicon.textOpacity = (1);
-YearProgressicon.leftAlignText();
+YearProgressicon.font = new Font('Menlo', 12) //font and size,字体与大小
+YearProgressicon.textColor = new Color('#8675a9') //font color,字体颜色
+YearProgressicon.textOpacity = (1); //opacity,不透明度
+YearProgressicon.leftAlignText(); //AlignText,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
 
-// Year label in stack
-const YearProgress = hStack0.addText("年度 "+renderYearProgress())
-YearProgress.font = new Font('Menlo', 12)
-YearProgress.textColor = new Color('#a5ecd7')
-YearProgress.textOpacity = (1);
-YearProgress.leftAlignText();
+// Year label in stack,年进度标签
+const YearProgress = hStack0.addText("全年 "+renderYearProgress())
+YearProgress.font = new Font('Menlo', 12) //font and size,字体与大小
+YearProgress.textColor = new Color('#8675a9') //font color,字体颜色
+YearProgress.textOpacity = (1); //opacity,不透明度
+YearProgress.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
 
-//Spacing between yearprogress and battery
+//Spacing between yearprogress and battery,年进度与电量行间距
 widgetHello.addSpacer(5);
 
-//define horizontal stack
+//define horizontal stack,创建一个stack，使下面组件都在同一个stack中，布局为横向布局（hStack1）
 let hStack1 = widgetHello.addStack();
 hStack1.layoutHorizontally();
 
-// Centers date line
-hStack1.addSpacer(0)
+// Centers line
+hStack1.addSpacer(0) //Left spacing,向左对齐间距
 
-// Battery icon in stack 
+// Battery icon in stack,电量图标、标签
 const batteryicon = hStack1.addText("⚡ 电能");
-batteryicon.textColor = new Color("a8df65"); 
-batteryicon.font = new Font('Menlo', 12); 
-batteryicon.leftAlignText();
+batteryicon.font = new Font('Menlo', 12); //font and size,字体与大小
+batteryicon.textColor = new Color("a8df65"); //font color,字体颜色
+batteryicon.textOpacity = (1); //opacity,不透明度
+batteryicon.leftAlignText(); //AlignText,对齐方式(center,left,right)
 
-// Battery Progress in stack 
+// Battery Progress in stack,电量进度条
 const batteryLine = hStack1.addText(renderBattery());
-batteryLine.textColor = new Color("a8df65"); 
-batteryLine.font = new Font("Menlo", 12); 
-batteryLine.leftAlignText();
+batteryLine.font = new Font("Menlo", 12); //font and size,字体与大小
+batteryLine.textColor = new Color("a8df65"); //font color,字体颜色
+batteryLine.textOpacity = (1);//opacity,不透明度
+batteryLine.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
 function renderBattery() { 
 const batteryLevel = Device.batteryLevel(); 
 const juice = "▓".repeat(Math.floor(batteryLevel * 10)); 
@@ -400,7 +403,7 @@ const used = "░".repeat(10 - juice.length)
 const batteryAscii = " " + juice + used + " " ; 
 return batteryAscii; }
 
-// Battery Status in stack
+// Battery Status in stack,电量状态
 var battery =  getBatteryLevel();
 if(Device.isCharging() && !Device.isFullyCharged()){
   battery = battery + " , 充电中...";
@@ -409,48 +412,51 @@ if(Device.isFullyCharged()){
   battery = battery + " , 已充满电!请拔下电源!";
 }
 let batterytext = hStack1.addText(battery);
-batterytext.font = new Font("Menlo", 12);
-batterytext.textColor = new Color('a8df65');
+batterytext.font = new Font("Menlo", 12); //font and size,字体与大小
+batterytext.textColor = new Color('a8df65'); //font color,字体颜色
+batterytext.textOpacity = (1); //opacity,不透明度
+batterytext.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
 
-//Spacing between battery and summary
+//Spacing between battery and summary,电量与天气行间距
 widgetHello.addSpacer(5);
 
 // Widget feel temp
 let feel = weathername + " today" + "." + " It feels like " + Math.round(feel_like) + "\u2103" + ";" + " the high will be " + Math.round(highTemp) + "\u2103";//"H:"+highTemp+"\u00B0"+" L:"+lowTemp+"\u00B0"
 var hltemptext = widgetHello.addText(feel);
-hltemptext.textColor = new Color('#51adcf');
-hltemptext.font = Font.regularSystemFont(12);
-hltemptext.leftAlignText();
-hltemptext.textOpacity = (0.7);
+hltemptext.font = Font.regularSystemFont(12); //font and size,字体与大小
+hltemptext.textColor = new Color('#51adcf'); //font color,字体颜色
+hltemptext.textOpacity = (0.7); //opacity,不透明度
+hltemptext.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
 
-//define horizontal stack
+
+//define horizontal stack,创建一个stack，使下面组件都在同一个stack中，布局为横向布局（hStack2）
 let hStack2 = widgetHello.addStack();
 hStack2.layoutHorizontally();
 
-// Centers weather line
-hStack2.addSpacer(0)
+// Centers line
+hStack2.addSpacer(0)//Left spacing,向左对齐间距
 
-// Date label
+// Date label,日期
 const datetext = hStack2.addText(datefull + "  ");
-datetext.font = Font.regularSystemFont(30);
-datetext.textColor = new Color('#a5ecd7');
-datetext.textOpacity = (1);
-datetext.leftAlignText();
+datetext.font = Font.regularSystemFont(30); //font and size,字体与大小
+datetext.textColor = new Color('#ffffff'); //font color,字体颜色
+datetext.textOpacity = (0.8); //opacity,不透明度
+datetext.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
 
 //image
 var img = Image.fromFile(await fetchimagelocal(iconData + "_ico"));
  
-//image in stack
-let widgetimg = hStack2.addImage(img);
-widgetimg.imageSize = new Size(40, 40);
-widgetimg.leftAlignImage();
+//image in stack 天气图像
+let widgetimg = hStack2.addImage(img); 
+widgetimg.imageSize = new Size(40, 40); //image size,图像大小
+widgetimg.leftAlignImage(); //Align,对齐方式(center,left,right)
 
 //tempeture label in stack
 let temptext = hStack2.addText('\xa0\xa0'+ Math.round(curTemp).toString()+"\u2103");
-temptext.font = Font.boldSystemFont(30);
-temptext.textColor = new Color('#0278ae');
-//temptext.textOpacity = (0.5);
-temptext.leftAlignText();
+temptext.font = Font.boldSystemFont(30); //font and size,字体与大小
+temptext.textColor = new Color('#0278ae'); //font color,字体颜色
+temptext.textOpacity = (1); //opacity,不透明度
+temptext.leftAlignText(); //AlignText,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
 
 // Bottom Spacer
  widgetHello.addSpacer();
