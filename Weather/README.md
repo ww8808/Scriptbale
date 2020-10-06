@@ -23,4 +23,4 @@ align=center>
 
 ### Tanks 
 - [JamarcusBourne](https://www.reddit.com/u/solelo/?utm_source=share&utm_medium=ios_app&utm_name=iossmf)
-- [Reddit](https://www.reddit.com/r/Scriptable/comments/izb5lm/would_anyone_know_how_to_add_a_weather/)
+- [GitHub](https://gist.github.com/Otherguy5826/a7a74b076e1bea6baaa6dd35d57090a9)
