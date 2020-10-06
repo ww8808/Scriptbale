@@ -405,11 +405,38 @@ return batteryAscii; }
 
 // Battery Status in stack,电量状态
 var battery =  getBatteryLevel();
-if(Device.isCharging() && !Device.isFullyCharged()){
-  battery = battery + " , 充电中...";
+if(Device.isCharging() && Device.batteryLevel() < 1){
+  battery = battery + " ⚡";
 }
-if(Device.isFullyCharged()){
-  battery = battery + " , 已充满电!请拔下电源!";
+if(Device.isCharging() && Device.batteryLevel() >= 1){
+  battery = battery + " 已充满电!请拔下电源!";
+}
+else if(Device.batteryLevel() >= 0.8 && Device.batteryLevel() <= 1){
+  battery = battery + " 电量充足,很有安全感!";
+}
+else if(Device.batteryLevel() >= 0.7 && Device.batteryLevel() <= 0.8){
+  battery = battery + " 电量充足,不出远门没有问题!";
+}
+else if(Device.batteryLevel() >= 0.6 && Device.batteryLevel() <= 0.7){
+  battery = battery + " 电量还有大半呢,不用着急充电!";
+}
+else if(Device.batteryLevel() >= 0.5 && Device.batteryLevel() <= 0.6){
+  battery = battery + " 电量用了不到一半,不着急充电!";
+}
+else if(Device.batteryLevel() >= 0.4 && Device.batteryLevel() <= 0.5 && !Device.isCharging()){
+  battery = battery + " 电量用了一半,有时间就充电啦!";
+}
+else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() <= 0.4 && !Device.isCharging()){
+  battery = battery + " 电量用了大半了,尽快充电啦!";
+}
+else if(Device.batteryLevel() >= 0.2 && Device.batteryLevel() <= 0.3 && !Device.isCharging()){
+  battery = battery + " 电量很快用完,赶紧充电啦!";
+}
+else if(Device.batteryLevel() >= 0.1 && Device.batteryLevel() <= 0.2 && !Device.isCharging()){
+  battery = battery + " 电量就剩不到20%了,尽快充电!";
+}
+else if(Device.batteryLevel() <= 0.1 && !Device.isCharging()){
+  battery = battery + " 电量快耗尽,再不充电我就关机了!";
 }
 let batterytext = hStack1.addText(battery);
 batterytext.font = new Font("Menlo", 12); //font and size,字体与大小
