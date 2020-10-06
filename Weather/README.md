@@ -21,8 +21,6 @@ align=center>
 <img src="https://github.com/xkerwin/Scriptbale-Weather/blob/main/image/full%20charge.PNG?raw=true" width = "200" height = "400" alt="充满电" 
 align=center>
 
-Tanks 
-
+### Tanks 
 - [JamarcusBourne](https://www.reddit.com/u/solelo/?utm_source=share&utm_medium=ios_app&utm_name=iossmf)
-
 - [Reddit](https://www.reddit.com/r/Scriptable/comments/izb5lm/would_anyone_know_how_to_add_a_weather/)
