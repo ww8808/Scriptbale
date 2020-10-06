@@ -1,8 +1,7 @@
 # Scriptbale-Weather
 
 ## 使用方法：
-1.你需要一个测试版的Scriptable [TestFlight](https://testflight.apple.com/join/uN1vTqxk) 
-2.
+1.你需要一个测试版的Scriptable [TestFlight](https://testflight.apple.com/join/uN1vTqxk)
 
 2.到[Open Weather](https://openweathermap.org)注册,获取你的`API_KEY`和`City_ID`填入下面代码中
 
