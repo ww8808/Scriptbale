@@ -60,8 +60,8 @@ if (fm.fileExists(backgroundImageURLInput) == false) {
 var spacing = parseInt(inputArr[1]);
 
 //API_KEY
-let API_WEATHER = "89065f71db2277cXXXXXX779a34f16a7";//Load Your api here
-let CITY_WEATHER = "18XXXX8";//add your city ID
+let API_WEATHER = "89065f71db2XXXXXXXXa779a34f16a7";//Load Your api here
+let CITY_WEATHER = "180XXXX";//add your city ID
 
 //Get storage
 var base_path = "/var/mobile/Library/Mobile Documents/iCloud~dk~simonbs~Scriptable/Documents/weather/";
@@ -340,7 +340,7 @@ if (config.runsInWidget) {
  
  
  //Top spacing
- widgetHello.addSpacer(10);
+ widgetHello.addSpacer(15);
 
  // Greeting label
  let hello = widgetHello.addText(greeting);
@@ -349,7 +349,7 @@ if (config.runsInWidget) {
  hello.leftAlignText();
  
 //Spacing between greeting and yearprogress
-widgetHello.addSpacer(10);
+widgetHello.addSpacer(5);
 
 //define horizontal stack
 let hStack0 = widgetHello.addStack();
@@ -373,7 +373,7 @@ YearProgress.textOpacity = (1);
 YearProgress.leftAlignText();
 
 //Spacing between yearprogress and battery
-widgetHello.addSpacer(10);
+widgetHello.addSpacer(5);
 
 //define horizontal stack
 let hStack1 = widgetHello.addStack();
@@ -413,7 +413,7 @@ batterytext.font = new Font("Menlo", 12);
 batterytext.textColor = new Color('a8df65');
 
 //Spacing between battery and summary
-widgetHello.addSpacer(10);
+widgetHello.addSpacer(5);
 
 // Widget feel temp
 let feel = weathername + " today" + "." + " It feels like " + Math.round(feel_like) + "\u2103" + ";" + " the high will be " + Math.round(highTemp) + "\u2103";//"H:"+highTemp+"\u00B0"+" L:"+lowTemp+"\u00B0"
@@ -430,6 +430,13 @@ hStack2.layoutHorizontally();
 // Centers weather line
 hStack2.addSpacer(0)
 
+// Date label
+const datetext = hStack2.addText(datefull + "  ");
+datetext.font = Font.regularSystemFont(30);
+datetext.textColor = new Color('#a5ecd7');
+datetext.textOpacity = (1);
+datetext.leftAlignText();
+
 //image
 var img = Image.fromFile(await fetchimagelocal(iconData + "_ico"));
  
@@ -444,13 +451,6 @@ temptext.font = Font.boldSystemFont(30);
 temptext.textColor = new Color('#0278ae');
 //temptext.textOpacity = (0.5);
 temptext.leftAlignText();
-
-// Date label
-const datetext = hStack2.addText("  "+datefull);
-datetext.font = Font.regularSystemFont(30);
-datetext.textColor = new Color('#a5ecd7');
-datetext.textOpacity = (1);
-datetext.leftAlignText();
 
 // Bottom Spacer
  widgetHello.addSpacer();
