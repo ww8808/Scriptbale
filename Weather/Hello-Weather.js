@@ -60,8 +60,8 @@ if (fm.fileExists(backgroundImageURLInput) == false) {
 var spacing = parseInt(inputArr[1]);
 
 //API_KEY
-let API_WEATHER = "XXXXXXXXXXXXXX";//Load Your api here
-let CITY_WEATHER = "XXXXXX";//add your city ID
+let API_WEATHER = "89065f71db2277cXXXXXX779a34f16a7";//Load Your api here
+let CITY_WEATHER = "18XXXX8";//add your city ID
 
 //Get storage
 var base_path = "/var/mobile/Library/Mobile Documents/iCloud~dk~simonbs~Scriptable/Documents/weather/";
@@ -303,7 +303,21 @@ function getBatteryLevel() {
 	const batteryLevel = Device.batteryLevel()
 	const batteryAscii = Math.round(batteryLevel * 100);
 	return batteryAscii + "%";
-  }
+}
+
+//Year Render
+function renderYearProgress() {
+  const now = new Date()
+  const start = new Date(now.getFullYear(), 0, 1) // Start of this year
+  const end = new Date(now.getFullYear() + 1, 0, 1) // End of this year
+  const progress = (now - start) / (end - start)
+  return renderProgress(progress)
+}
+function renderProgress(progress) {
+  const used = '▓'.repeat(Math.floor(progress * 24))
+  const left = '░'.repeat(24 - used.length)
+  return `${used}${left} ${Math.floor(progress * 100)}%`
+}
 
 // Try/catch for color input parameter
 try {
@@ -334,17 +348,31 @@ if (config.runsInWidget) {
  hello.textColor = new Color('e8ffc1');
  hello.leftAlignText();
  
-//Spacing between greeting and date
+//Spacing between greeting and yearprogress
 widgetHello.addSpacer(10);
 
-// Date label in stack
-let datetext = widgetHello.addText(datefull + '\xa0\xa0\xa0\xa0');
-datetext.font = Font.regularSystemFont(18);
-datetext.textColor = new Color('#a5ecd7');
-datetext.textOpacity = (1);
-datetext.leftAlignText();
+//define horizontal stack
+let hStack0 = widgetHello.addStack();
+hStack0.layoutHorizontally();
 
-//Spacing between date and battery
+// Centers date line
+hStack0.addSpacer(0)
+
+// Year icon in stack
+const YearProgressicon = hStack0.addText("◕ ")
+YearProgressicon.font = new Font('Menlo', 12)
+YearProgressicon.textColor = new Color('#a5ecd7')
+YearProgressicon.textOpacity = (1);
+YearProgressicon.leftAlignText();
+
+// Year label in stack
+const YearProgress = hStack0.addText("年度 "+renderYearProgress())
+YearProgress.font = new Font('Menlo', 12)
+YearProgress.textColor = new Color('#a5ecd7')
+YearProgress.textOpacity = (1);
+YearProgress.leftAlignText();
+
+//Spacing between yearprogress and battery
 widgetHello.addSpacer(10);
 
 //define horizontal stack
@@ -355,15 +383,15 @@ hStack1.layoutHorizontally();
 hStack1.addSpacer(0)
 
 // Battery icon in stack 
-const batteryicon = hStack1.addText("⚡");
+const batteryicon = hStack1.addText("⚡ 电能");
 batteryicon.textColor = new Color("a8df65"); 
-batteryicon.font = Font.regularSystemFont(14); 
+batteryicon.font = new Font('Menlo', 12); 
 batteryicon.leftAlignText();
 
 // Battery Progress in stack 
 const batteryLine = hStack1.addText(renderBattery());
 batteryLine.textColor = new Color("a8df65"); 
-batteryLine.font = new Font("Menlo", 14); 
+batteryLine.font = new Font("Menlo", 12); 
 batteryLine.leftAlignText();
 function renderBattery() { 
 const batteryLevel = Device.batteryLevel(); 
@@ -381,7 +409,7 @@ if(Device.isFullyCharged()){
   battery = battery + " , 已充满电!请拔下电源!";
 }
 let batterytext = hStack1.addText(battery);
-batterytext.font = Font.boldSystemFont(14);
+batterytext.font = new Font("Menlo", 12);
 batterytext.textColor = new Color('a8df65');
 
 //Spacing between battery and summary
@@ -416,6 +444,13 @@ temptext.font = Font.boldSystemFont(30);
 temptext.textColor = new Color('#0278ae');
 //temptext.textOpacity = (0.5);
 temptext.leftAlignText();
+
+// Date label
+const datetext = hStack2.addText("  "+datefull);
+datetext.font = Font.regularSystemFont(30);
+datetext.textColor = new Color('#a5ecd7');
+datetext.textOpacity = (1);
+datetext.leftAlignText();
 
 // Bottom Spacer
  widgetHello.addSpacer();
