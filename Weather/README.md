@@ -1,5 +1,7 @@
 # Scriptbale-Weather
 
+Tanks [JamarcusBourne](https://www.reddit.com/u/solelo/?utm_source=share&utm_medium=ios_app&utm_name=iossmf)
+
 到
 https://openweathermap.org
 注册获取你的`API_KEY`和`City_ID`填入下面代码中
