@@ -61,7 +61,7 @@ var spacing = parseInt(inputArr[1]);
 
 //API_KEY
 let API_WEATHER = "89065f71db2277c83d22a779a34f16a7";//Load Your api here
-let CITY_WEATHER = "1809858";// add your city ID
+let CITY_WEATHER = "1809858";//add your city ID
 
 //Get storage
 var base_path = "/var/mobile/Library/Mobile Documents/iCloud~dk~simonbs~Scriptable/Documents/weather/";
@@ -330,11 +330,21 @@ if (config.runsInWidget) {
 
  // Greeting label
  let hello = widgetHello.addText(greeting);
- hello.font = Font.regularSystemFont(35);
+ hello.font = Font.boldSystemFont(35);
  hello.textColor = new Color('e8ffc1');
  hello.leftAlignText();
  
 //Spacing between greeting and date
+widgetHello.addSpacer(10);
+
+// Date label in stack
+let datetext = widgetHello.addText(datefull + '\xa0\xa0\xa0\xa0');
+datetext.font = Font.regularSystemFont(18);
+datetext.textColor = new Color('#a5ecd7');
+datetext.textOpacity = (1);
+datetext.leftAlignText();
+
+//Spacing between date and battery
 widgetHello.addSpacer(10);
 
 //define horizontal stack
@@ -344,26 +354,37 @@ hStack1.layoutHorizontally();
 // Centers date line
 hStack1.addSpacer(0)
 
-// Date label in stack
-let datetext = hStack1.addText(datefull + '\xa0\xa0\xa0\xa0');
-datetext.font = Font.regularSystemFont(18);
-datetext.textColor = new Color('#a5ecd7');
-datetext.textOpacity = (1);
-datetext.leftAlignText();
+// Battery icon in stack 
+const batteryicon = hStack1.addText("⚡");
+batteryicon.textColor = new Color("a8df65"); 
+batteryicon.font = Font.regularSystemFont(14); 
+batteryicon.leftAlignText();
+
+// Battery Progress in stack 
+const batteryLine = hStack1.addText(renderBattery());
+batteryLine.textColor = new Color("a8df65"); 
+batteryLine.font = new Font("Menlo", 14); 
+batteryLine.leftAlignText();
+function renderBattery() { 
+const batteryLevel = Device.batteryLevel(); 
+const juice = "▓".repeat(Math.floor(batteryLevel * 10)); 
+const used = "░".repeat(10 - juice.length) 
+const batteryAscii = " " + juice + used + " " ; 
+return batteryAscii; }
 
 // Battery Status in stack
-var battery = " ⚡ " + getBatteryLevel();
+var battery =  getBatteryLevel();
 if(Device.isCharging() && !Device.isFullyCharged()){
-  battery = battery + ", 充电中...";
+  battery = battery + " , 充电中...";
 }
 if(Device.isFullyCharged()){
-  battery = battery +", 已充满电!请拔下电源!";
+  battery = battery + " , 已充满电!请拔下电源!";
 }
 let batterytext = hStack1.addText(battery);
-batterytext.font = Font.regularSystemFont(18);
+batterytext.font = Font.boldSystemFont(14);
 batterytext.textColor = new Color('a8df65');
 
-//Spacing between date and summary
+//Spacing between battery and summary
 widgetHello.addSpacer(10);
 
 // Widget feel temp
@@ -391,7 +412,7 @@ widgetimg.leftAlignImage();
 
 //tempeture label in stack
 let temptext = hStack2.addText('\xa0\xa0'+ Math.round(curTemp).toString()+"\u2103");
-temptext.font = Font.regularSystemFont(30);
+temptext.font = Font.boldSystemFont(30);
 temptext.textColor = new Color('#0278ae');
 //temptext.textOpacity = (0.5);
 temptext.leftAlignText();
