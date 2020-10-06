@@ -603,20 +603,3 @@ function phoneSizes() {
   }
   return phones
 }
-
-function ordinalSuffix(input) {
-	if (input % 10 == 1 && date != 11) {
-		return input.toString() + "日";
-	} else if (input % 10 == 2 && date != 12) {
-		return input.toString() + "日";
-	} else if (input % 10 == 3 && date != 13) {
-		return input.toString() + "日";
-	} else {
-		return input.toString() + "日";
-	}
-}
-
-function randomGreeting(greetingArray) {
-	return Math.floor(Math.random() * greetingArray.length);
-}
-
