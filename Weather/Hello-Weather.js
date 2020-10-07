@@ -8,7 +8,6 @@
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-purple; icon-glyph: image;
 // This widget was created by Max Zeryck @mzeryck,在原来的基础上增加了更多内容显示（均来自网络收集）
-
 // Widgets are unique based on the name of the script.
 
 const filename = Script.name() + ".jpg"
@@ -56,7 +55,6 @@ if (fm.fileExists(backgroundImageURLInput) == false) {
 } else {
 	backgroundImageURL = scriptableFilePath + removeSpaces2;
 }
-
 var spacing = parseInt(inputArr[1]);
 
 //API_KEY
@@ -73,16 +71,6 @@ async function fetchimageurl(url) {
 	var res = await request.loadImage();
 	return res;
 }
-
-// Get formatted Date
-function getformatteddate(){
-  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  return months[today.getMonth()] + " " + today.getDate()
-}
-
-// Long-form days and months
-var days = ['周日','周一','周二','周三','周四','周五','周六'];
-var months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
 
 // Load image from local drive
 async function fetchimagelocal(path){
@@ -107,6 +95,7 @@ async function fetchimagelocal(path){
   }
 }
 
+// Weather icons
 async function downloadimg(path){
 	const url = "http://a.animedlweb.ga/weather/weathers25_2.json";
 	const data = await fetchWeatherData(url);
@@ -193,6 +182,8 @@ async function fetchWeatherData(url) {
 let curLocation = await Location.current();
 console.log(curLocation.latitude);
 console.log(curLocation.longitude);*/
+
+// use "&units=imperial" for Farenheit or "&units=metric" for Celcius
 let wetherurl = "http://api.openweathermap.org/data/2.5/weather?id=" + CITY_WEATHER + "&APPID=" + API_WEATHER + "&units=metric";
 //"http://api.openweathermap.org/data/2.5/weather?lat=" + curLocation.latitude + "&lon=" + curLocation.longitude + "&appid=" + API_WEATHER + "&units=metric";
 //"http://api.openweathermap.org/data/2.5/weather?id=" + CITY_WEATHER + "&APPID=" + API_WEATHER + "&units=metric"
@@ -208,6 +199,16 @@ const highTemp = curTempObj.temp_max;
 const lowTemp = curTempObj.temp_min;
 const feel_like = curTempObj.feels_like;
 //Completed loading weather data
+
+// Get formatted Date
+function getformatteddate(){
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return months[today.getMonth()] + " " + today.getDate()
+}
+
+// Long-form days and months
+var days = ['周日','周一','周二','周三','周四','周五','周六'];
+var months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
 
 // Greetings arrays per time period. 
 var greetingsMorning = [
@@ -264,7 +265,6 @@ function ordinalSuffix(input) {
 		return input.toString() + "日";
 	}
 }
-
 // Generate date string
 var datefull = month + " " + ordinalSuffix(date) +", " + weekday;
 
@@ -287,24 +287,20 @@ if (hour < 5 && hour >= 1) { // 1am - 5am
 } else if (hour > 17 && hour < 23) { // 5pm - 11pm
 	greeting = greetingsEvening[randomGreeting(greetingsEvening)];
 } 
-
 // Overwrite greeting if calculated holiday
 if (holidaysByKey[holidayKey]) {
 	greeting = holidaysByKey[holidayKey];
 }
-
 // Overwrite all greetings if specific holiday
 if (holidaysByDate[holidayKeyDate]) {
 	greeting = holidaysByDate[holidayKeyDate];
 }
-
 //Battery Render
 function getBatteryLevel() {
 	const batteryLevel = Device.batteryLevel()
 	const batteryAscii = Math.round(batteryLevel * 100);
 	return batteryAscii + "%";
 }
-
 //Year Render
 function renderYearProgress() {
   const now = new Date()
@@ -314,8 +310,8 @@ function renderYearProgress() {
   return renderProgress(progress)
 }
 function renderProgress(progress) {
-  const used = '▓'.repeat(Math.floor(progress * 24))
-  const left = '░'.repeat(24 - used.length)
+  const used = '▓'.repeat(Math.floor(progress * 10))
+  const left = '░'.repeat(10 - used.length)
   return `${used}${left} ${Math.floor(progress * 100)}%`
 }
 
@@ -337,7 +333,7 @@ if (config.runsInWidget) {
  /* --------------- */
  /* Assemble Widget */
  /* --------------- */
- 
+//Script.setWidget(widget)
  
  //Top spacing,顶部间距
  widgetHello.addSpacer(15);
@@ -367,7 +363,7 @@ YearProgressicon.textOpacity = (1); //opacity,不透明度
 YearProgressicon.leftAlignText(); //AlignText,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
 
 // Year label in stack,年进度标签
-const YearProgress = hStack0.addText("全年 "+renderYearProgress())
+const YearProgress = hStack0.addText("全年 "+renderYearProgress()+" 𝒚𝒐𝒖 𝒅𝒊𝒅 𝒚𝒐𝒖𝒓 𝒃𝒆𝒔𝒕 𝒕𝒐𝒅𝒂𝒚?!")
 YearProgress.font = new Font('Menlo', 12) //font and size,字体与大小
 YearProgress.textColor = new Color('#8675a9') //font color,字体颜色
 YearProgress.textOpacity = (1); //opacity,不透明度
@@ -386,14 +382,55 @@ hStack1.addSpacer(0) //Left spacing,向左对齐间距
 // Battery icon in stack,电量图标、标签
 const batteryicon = hStack1.addText("⚡ 电能");
 batteryicon.font = new Font('Menlo', 12); //font and size,字体与大小
-batteryicon.textColor = new Color("a8df65"); //font color,字体颜色
+if(Device.isCharging() && Device.batteryLevel() < 1){
+  batteryicon.textColor = new Color('008891'); //font color,充电状态字体颜色
+}
+if(Device.isCharging() && Device.batteryLevel() == 1){
+  batteryicon.textColor = new Color('ff5f40'); //font color,满电提示字体颜色
+}
+else if(Device.batteryLevel() >= 0.8 && Device.batteryLevel() <= 1 && !Device.isCharging()){
+  batteryicon.textColor = new Color('c4fb6d'); //font color,电量充足字体颜色
+}
+else if(Device.batteryLevel() >= 0.5 && Device.batteryLevel() <= 8 && !Device.isCharging()){
+  batteryicon.textColor = new Color('d3de32'); //font color,电量正常字体颜色
+}
+else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() <= 0.5 && !Device.isCharging()){
+  batteryicon.textColor = new Color('e5df88'); //font color,电量偏低字体颜色
+}
+else if(Device.batteryLevel() >= 0.1 && Device.batteryLevel() <= 0.3 && !Device.isCharging()){
+  batteryicon.textColor = new Color('ffd571'); //font color,电量低字体颜色
+}
+else if(Device.batteryLevel() >= 0 && Device.batteryLevel() <= 0.1 && !Device.isCharging()){
+  batteryicon.textColor = new Color('ec0101'); //font color,电量不足字体颜色
+}
+
 batteryicon.textOpacity = (1); //opacity,不透明度
 batteryicon.leftAlignText(); //AlignText,对齐方式(center,left,right)
 
 // Battery Progress in stack,电量进度条
 const batteryLine = hStack1.addText(renderBattery());
 batteryLine.font = new Font("Menlo", 12); //font and size,字体与大小
-batteryLine.textColor = new Color("a8df65"); //font color,字体颜色
+if(Device.isCharging() && Device.batteryLevel() < 1){
+  batteryLine.textColor = new Color('008891'); //font color,充电状态字体颜色
+}
+if(Device.isCharging() && Device.batteryLevel() == 1){
+  batteryLine.textColor = new Color('ff5f40'); //font color,满电提示字体颜色
+}
+else if(Device.batteryLevel() >= 0.8 && Device.batteryLevel() <= 1 && !Device.isCharging()){
+  batteryLine.textColor = new Color('c4fb6d'); //font color,电量充足字体颜色
+}
+else if(Device.batteryLevel() >= 0.5 && Device.batteryLevel() <= 8 && !Device.isCharging()){
+  batteryLine.textColor = new Color('d3de32'); //font color,电量正常字体颜色
+}
+else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() <= 0.5 && !Device.isCharging()){
+  batteryLine.textColor = new Color('e5df88'); //font color,电量偏低字体颜色
+}
+else if(Device.batteryLevel() >= 0.1 && Device.batteryLevel() <= 0.3 && !Device.isCharging()){
+  batteryLine.textColor = new Color('ffd571'); //font color,电量低字体颜色
+}
+else if(Device.batteryLevel() >= 0 && Device.batteryLevel() <= 0.1 && !Device.isCharging()){
+  batteryLine.textColor = new Color('ec0101'); //font color,电量不足字体颜色
+}
 batteryLine.textOpacity = (1);//opacity,不透明度
 batteryLine.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
 function renderBattery() { 
@@ -408,8 +445,8 @@ var battery =  getBatteryLevel();
 if(Device.isCharging() && Device.batteryLevel() < 1){
   battery = battery + " ⚡";
 }
-if(Device.isCharging() && Device.batteryLevel() >= 1){
-  battery = battery + " 已充满电!请拔下电源!";
+if(Device.isCharging() && Device.batteryLevel() == 1){
+  battery = battery + " ⚡ 已充满电!请拔下电源!";
 }
 else if(Device.batteryLevel() >= 0.8 && Device.batteryLevel() <= 1){
   battery = battery + " 电量充足,很有安全感!";
@@ -440,7 +477,27 @@ else if(Device.batteryLevel() <= 0.1 && !Device.isCharging()){
 }
 let batterytext = hStack1.addText(battery);
 batterytext.font = new Font("Menlo", 12); //font and size,字体与大小
-batterytext.textColor = new Color('a8df65'); //font color,字体颜色
+if(Device.isCharging() && Device.batteryLevel() < 1){
+  batterytext.textColor = new Color('008891'); //font color,充电状态字体颜色
+}
+if(Device.isCharging() && Device.batteryLevel() == 1){
+  batterytext.textColor = new Color('ff5f40'); //font color,满电提示字体颜色
+}
+else if(Device.batteryLevel() >= 0.8 && Device.batteryLevel() <= 1 && !Device.isCharging()){
+  batterytext.textColor = new Color('c4fb6d'); //font color,电量充足字体颜色
+}
+else if(Device.batteryLevel() >= 0.5 && Device.batteryLevel() <= 8 && !Device.isCharging()){
+  batterytext.textColor = new Color('d3de32'); //font color,电量正常字体颜色
+}
+else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() <= 0.5 && !Device.isCharging()){
+  batterytext.textColor = new Color('e5df88'); //font color,电量偏低字体颜色
+}
+else if(Device.batteryLevel() >= 0.1 && Device.batteryLevel() <= 0.3 && !Device.isCharging()){
+  batterytext.textColor = new Color('ffd571'); //font color,电量低字体颜色
+}
+else if(Device.batteryLevel() >= 0 && Device.batteryLevel() <= 0.1 && !Device.isCharging()){
+  batterytext.textColor = new Color('ec0101'); //font color,电量不足字体颜色
+}
 batterytext.textOpacity = (1); //opacity,不透明度
 batterytext.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
 
@@ -448,6 +505,7 @@ batterytext.leftAlignText(); //Align,对齐方式(center,left,right)！在同一
 widgetHello.addSpacer(5);
 
 // Widget feel temp
+//Use "u\2103" to show degrees celcius and "u\2109" to show degrees farenheit
 let feel = weathername + " today" + "." + " It feels like " + Math.round(feel_like) + "\u2103" + ";" + " the high will be " + Math.round(highTemp) + "\u2103";//"H:"+highTemp+"\u00B0"+" L:"+lowTemp+"\u00B0"
 var hltemptext = widgetHello.addText(feel);
 hltemptext.font = Font.regularSystemFont(12); //font and size,字体与大小
@@ -490,7 +548,8 @@ temptext.leftAlignText(); //AlignText,对齐方式(center,left,right)！在同�
  widgetHello.setPadding( 0, 0, 0, 0)
  widgetHello.backgroundImage = widget.backgroundImage
   Script.setWidget(widgetHello)
-  Script.complete()
+
+//Script.complete()
 
 
 /*
@@ -602,72 +661,82 @@ function cropImage(img,rect) {
 
 // Pixel sizes and positions for widgets on all supported phones.
 function phoneSizes() {
-  let phones = { 
- "2688": {
-   "small":  507,
-   "medium": 1080,
-   "large":  1137,
-   "left":  81,
-   "right": 654,
-   "top":    228,
-   "middle": 858,
-   "bottom": 1488
- },
- 
- "1792": {
-   "small":  338,
-   "medium": 720,
-   "large":  758,
-   "left":  54,
-   "right": 436,
-   "top":    160,
-   "middle": 580,
-   "bottom": 1000
- },
- 
- "2436": {
-   "small":  465,
-   "medium": 987,
-   "large":  1035,
-   "left":  69,
-   "right": 591,
-   "top":    213,
-   "middle": 783,
-   "bottom": 1353
- },
- 
- "2208": {
-   "small":  471,
-   "medium": 1044,
-   "large":  1071,
-   "left":  99,
-   "right": 672,
-   "top":    114,
-   "middle": 696,
-   "bottom": 1278
- },
- 
- "1334": {
-   "small":  296,
-   "medium": 642,
-   "large":  648,
-   "left":  54,
-   "right": 400,
-   "top":    60,
-   "middle": 412,
-   "bottom": 764
- },
- 
- "1136": {
-   "small":  282,
-   "medium": 584,
-   "large":  622,
-   "left": 30,
-   "right": 332,
-   "top":  59,
-   "middle": 399,
-   "bottom": 399
- }
+  let phones = {	
+	"2688": {
+			"small":  507,
+			"medium": 1080,
+			"large":  1137,
+			"left":  81,
+			"right": 654,
+			"top":    228,
+			"middle": 858,
+			"bottom": 1488
+	},
+	
+	"1792": {
+			"small":  338,
+			"medium": 720,
+			"large":  758,
+			"left":  54,
+			"right": 436,
+			"top":    160,
+			"middle": 580,
+			"bottom": 1000
+	},
+	
+	"2436": {
+			"small":  465,
+			"medium": 987,
+			"large":  1035,
+			"left":  69,
+			"right": 591,
+			"top":    213,
+			"middle": 783,
+			"bottom": 1353
+	},
+	
+	"2208": {
+			"small":  471,
+			"medium": 1044,
+			"large":  1071,
+			"left":  99,
+			"right": 672,
+			"top":    114,
+			"middle": 696,
+			"bottom": 1278
+	},
+	
+	"1334": {
+			"small":  296,
+			"medium": 642,
+			"large":  648,
+			"left":  54,
+			"right": 400,
+			"top":    60,
+			"middle": 412,
+			"bottom": 764
+	},
+	
+	"1136": {
+			"small":  282,
+			"medium": 584,
+			"large":  622,
+			"left": 30,
+			"right": 332,
+			"top":  59,
+			"middle": 399,
+			"bottom": 399
+	},
+        "1624": {
+                        "small": 310,
+                        "medium": 658,
+                        "large": 690,
+                        "left": 46,
+                        "right": 394,
+                        "top": 142,
+                        "middle": 522,
+                        "bottom": 902 
+        }
   }
   return phones
 }
