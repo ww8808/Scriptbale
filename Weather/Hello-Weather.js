@@ -417,7 +417,7 @@ if (config.runsInWidget) {
 
 // Greeting label
 // 问候标签
-let hello = widgetHello.addText(greeting);
+let hello = widgetHello.addText(" " + greeting);
 hello.font = Font.boldSystemFont(35); //font and size,字体与大小
 hello.textColor = new Color('e8ffc1'); //font color,字体颜色
 hello.textOpacity = (1); //opacity,不透明度
@@ -433,7 +433,7 @@ let hStack0 = widgetHello.addStack();
 hStack0.layoutHorizontally();
 
 // Centers line
-hStack0.addSpacer(0) //Left spacing,向左对齐间距
+hStack0.addSpacer(10); //Left spacing,向左对齐间距
 
 // Year icon in stack
 // 年进度图标
@@ -478,7 +478,7 @@ let hStack1 = widgetHello.addStack();
 hStack1.layoutHorizontally();
 
 // Centers line
-hStack1.addSpacer(0) //Left spacing,向左对齐间距
+hStack1.addSpacer(10); //Left spacing,向左对齐间距
 
 // Battery icon in stack
 // 电量图标、标签、颜色
@@ -487,7 +487,7 @@ batteryicon.font = Font.regularSystemFont(12); //font and size,字体与大小
 if(Device.isCharging() && Device.batteryLevel() < 1){
   batteryicon.textColor = new Color('008891'); //font color,充电状态字体颜色
 }
-if(Device.isCharging() && Device.batteryLevel() == 1){
+if(Device.isCharging() && Device.batteryLevel() >= 1){
   batteryicon.textColor = new Color('ff5f40'); //font color,满电提示字体颜色
 }
 else if(Device.batteryLevel() >= 0.8 && Device.batteryLevel() <= 1 && !Device.isCharging()){
@@ -515,7 +515,7 @@ batteryLine.font = new Font("Menlo", 12); //font and size,字体与大小
 if(Device.isCharging() && Device.batteryLevel() < 1){
   batteryLine.textColor = new Color('008891'); //font color,充电状态字体颜色
 }
-if(Device.isCharging() && Device.batteryLevel() == 1){
+if(Device.isCharging() && Device.batteryLevel() >= 1){
   batteryLine.textColor = new Color('ff5f40'); //font color,满电提示字体颜色
 }
 else if(Device.batteryLevel() >= 0.8 && Device.batteryLevel() <= 1 && !Device.isCharging()){
@@ -542,10 +542,10 @@ var battery =  getBatteryLevel();
 if(Device.isCharging() && Device.batteryLevel() < 1){
   battery = battery + " ⚡";
 }
-if(Device.isCharging() && Device.batteryLevel() == 1){
+if(Device.isCharging() && Device.batteryLevel() >= 1){
   battery = battery + " ⚡ 已充满电!请拔下电源!";
 }
-else if(Device.batteryLevel() > 0.8 && Device.batteryLevel() <= 1){
+else if(Device.batteryLevel() > 0.8 && Device.batteryLevel() <= 1 && !Device.isCharging()){
   battery = battery + " 电量充足,很有安全感!";
 }
 else if(Device.batteryLevel() >= 0.7 && Device.batteryLevel() < 0.8){
@@ -594,7 +594,7 @@ batterytext.font = Font.regularSystemFont(12); //font and size,字体与大小
 if(Device.isCharging() && Device.batteryLevel() < 1){
   batterytext.textColor = new Color('008891'); //font color,充电状态字体颜色
 }
-if(Device.isCharging() && Device.batteryLevel() == 1){
+if(Device.isCharging() && Device.batteryLevel() >= 1){
   batterytext.textColor = new Color('ff5f40'); //font color,满电提示字体颜色
 }
 else if(Device.batteryLevel() >= 0.8 && Device.batteryLevel() <= 1 && !Device.isCharging()){
@@ -619,27 +619,34 @@ batterytext.leftAlignText(); //Align,对齐方式(center,left,right)！在同一
 // 电量与天气、日期之间的间距
 widgetHello.addSpacer(5);
 
-// Widget feel temp
-// 天气简报（最高温度与最低温度）
-let feel = weathername + " 𝙩𝙤𝙙𝙖𝙮" + "." + " 𝙄𝙩 𝙛𝙚𝙚𝙡𝙨 𝙡𝙞𝙠𝙚 " + Math.round(feel_like) + UNITS + ";" + " 𝙩𝙝𝙚 𝙝𝙞𝙜𝙝 𝙬𝙞𝙡𝙡 𝙗𝙚 " + Math.round(highTemp) + UNITS;//"H:"+highTemp+"\u00B0"+" L:"+lowTemp+"\u00B0"
-var hltemptext = widgetHello.addText(feel);
-hltemptext.font = Font.regularSystemFont(12); //font and size,字体与大小
-hltemptext.textColor = new Color('#51adcf'); //font color,字体颜色
-hltemptext.textOpacity = (0.7); //opacity,不透明度
-hltemptext.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
-
-
 // define horizontal stack
 // 创建一个stack，使下面组件都在同一个stack中，布局为横向布局（hStack2）
 let hStack2 = widgetHello.addStack();
 hStack2.layoutHorizontally();
 
 // Centers line
-hStack2.addSpacer(0)//Left spacing,向左对齐间距
+hStack2.addSpacer(10);//Left spacing,向左对齐间距
+
+// Widget feel temp
+// 天气简报（最高温度与最低温度）
+const feeltext =hStack2.addText(weathername + " 𝙩𝙤𝙙𝙖𝙮" + "." + " 𝙄𝙩 𝙛𝙚𝙚𝙡𝙨 𝙡𝙞𝙠𝙚 " + Math.round(feel_like) + UNITS + ";" + " 𝙩𝙝𝙚 𝙝𝙞𝙜𝙝 𝙬𝙞𝙡𝙡 𝙗𝙚 " + Math.round(highTemp) + UNITS);
+feeltext.font = Font.regularSystemFont(12); //font and size,字体与大小
+feeltext.textColor = new Color('#51adcf'); //font color,字体颜色
+feeltext.textOpacity = (0.7); //opacity,不透明度
+feeltext.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
+
+
+// define horizontal stack
+// 创建一个stack，使下面组件都在同一个stack中，布局为横向布局（hStack2）
+let hStack3 = widgetHello.addStack();
+hStack3.layoutHorizontally();
+
+// Centers line
+hStack3.addSpacer(10);//Left spacing,向左对齐间距
 
 // Date label
 // 日期
-const datetext = hStack2.addText(datefull + "  ");
+const datetext = hStack3.addText(datefull + "  ");
 datetext.font = Font.regularSystemFont(30); //font and size,字体与大小
 datetext.textColor = new Color('#ffffff'); //font color,字体颜色
 datetext.textOpacity = (0.8); //opacity,不透明度
@@ -648,13 +655,13 @@ datetext.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个
 // Weather icons in stack
 // 天气图标
 var img = Image.fromFile(await fetchimagelocal(iconData + "_ico"));
-let widgetimg = hStack2.addImage(img); 
+let widgetimg = hStack3.addImage(img); 
 widgetimg.imageSize = new Size(40, 40); //image size,图像大小
 widgetimg.leftAlignImage(); //Align,对齐方式(center,left,right)
 
 // tempeture label in stack
 // 温度
-let temptext = hStack2.addText('\xa0\xa0'+ Math.round(curTemp).toString()+UNITS);
+let temptext = hStack3.addText('\xa0\xa0'+ Math.round(curTemp).toString()+UNITS);
 temptext.font = Font.boldSystemFont(30); //font and size,字体与大小
 temptext.textColor = new Color('#0278ae'); //font color,字体颜色
 temptext.textOpacity = (1); //opacity,不透明度
