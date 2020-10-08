@@ -18,11 +18,30 @@
 
 
 充电中：
-<img src="https://github.com/xkerwin/Scriptbale/blob/main/image/充满电提示.jpg?raw=true" width = "400" height = "175" alt="充电中" 
+<img src="https://github.com/xkerwin/Scriptbale/blob/main/image/充满电提示.jpg" width = "400" height = "175" alt="充电中" 
 align=center>
 电量充足：
 <img src="https://github.com/xkerwin/Scriptbale/blob/main/image/电量充足.jpg" width = "400" height = "175" alt="电量充足" 
 align=center>
+
+电量正常：
+<img src="https://github.com/xkerwin/Scriptbale/blob/main/image/电量正常.jpg" width = "400" height = "175" alt="电量正常" 
+align=center>
+电量偏低：
+<img src="https://github.com/xkerwin/Scriptbale/blob/main/image/电量偏低.jpg" width = "400" height = "175" alt="电量偏低" 
+align=center>
+
+电量极低：
+<img src="https://github.com/xkerwin/Scriptbale/blob/main/image/电量极低.jpg" width = "400" height = "175" alt="电量极低" 
+align=center>
+电量不足：
+<img src="https://github.com/xkerwin/Scriptbale/blob/main/image/电量不足.jpg" width = "400" height = "175" alt="电量不足" 
+align=center>
+
+充满电：
+<img src="https://github.com/xkerwin/Scriptbale/blob/main/image/充满电提示.jpg" width = "400" height = "175" alt="充满电提示" 
+align=center>
+
 
 ### Tanks 
 - [JamarcusBourne](https://www.reddit.com/u/solelo/?utm_source=share&utm_medium=ios_app&utm_name=iossmf)
