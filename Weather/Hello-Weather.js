@@ -71,9 +71,18 @@ var spacing = parseInt(inputArr[1]);
 // Load Your api in "".Get a free API key here: https://openweathermap.org/appid
 // 在 "" 内填写你的API—_KEY。在此处获取免费的API密钥：https://openweathermap.org/appid
 let API_WEATHER = "89065f71db2277c83d22a779a34f16a7"; 
+
 // add your city ID
 // 在 "" 内填入你的City ID。
 let CITY_WEATHER = "1809858";
+
+// Set to imperial for Fahrenheit, or metric for Celsius
+// 华氏度设置为英制imperial，摄氏度设置为公制metric
+let TEMPERATURE = "metric"
+
+// Use "\u2103" to show degrees celcius and "\u2109" to show degrees farenheit.
+// 使用 "\u2103" 为摄氏度,使用 "\u2109" 为华氏度。
+let UNITS = "\u2103"
 
 // Get storage.
 // 储存空间。
@@ -204,7 +213,7 @@ console.log(curLocation.longitude);*/
 
 // use "&units=imperial" for Farenheit or "&units=metric" for Celcius
 // “＆units = imperial”华氏度，“＆units = metric”摄氏度。
-let wetherurl = "http://api.openweathermap.org/data/2.5/weather?id=" + CITY_WEATHER + "&APPID=" + API_WEATHER + "&units=metric";
+let wetherurl = "http://api.openweathermap.org/data/2.5/weather?id=" + CITY_WEATHER + "&APPID=" + API_WEATHER + "&units=" + TEMPERATURE;
 //"http://api.openweathermap.org/data/2.5/weather?lat=" + curLocation.latitude + "&lon=" + curLocation.longitude + "&appid=" + API_WEATHER + "&units=metric";
 //"http://api.openweathermap.org/data/2.5/weather?id=" + CITY_WEATHER + "&APPID=" + API_WEATHER + "&units=metric"
 
@@ -587,9 +596,7 @@ widgetHello.addSpacer(5);
 
 // Widget feel temp
 // 天气简报（最高温度与最低温度）
-// Use "u\2103" to show degrees celcius and "u\2109" to show degrees farenheit.
-// 使用 "u\2103" 为摄氏度,使用 "u\2109" 为华氏度。
-let feel = weathername + " today" + "." + " It feels like " + Math.round(feel_like) + "\u2103" + ";" + " the high will be " + Math.round(highTemp) + "\u2103";//"H:"+highTemp+"\u00B0"+" L:"+lowTemp+"\u00B0"
+let feel = weathername + " today" + "." + " It feels like " + Math.round(feel_like) + UNITS + ";" + " the high will be " + Math.round(highTemp) + UNITS;//"H:"+highTemp+"\u00B0"+" L:"+lowTemp+"\u00B0"
 var hltemptext = widgetHello.addText(feel);
 hltemptext.font = Font.regularSystemFont(12); //font and size,字体与大小
 hltemptext.textColor = new Color('#51adcf'); //font color,字体颜色
@@ -622,7 +629,7 @@ widgetimg.leftAlignImage(); //Align,对齐方式(center,left,right)
 
 // tempeture label in stack
 // 温度
-let temptext = hStack2.addText('\xa0\xa0'+ Math.round(curTemp).toString()+"\u2103");
+let temptext = hStack2.addText('\xa0\xa0'+ Math.round(curTemp).toString()+UNITS);
 temptext.font = Font.boldSystemFont(30); //font and size,字体与大小
 temptext.textColor = new Color('#0278ae'); //font color,字体颜色
 temptext.textOpacity = (1); //opacity,不透明度
