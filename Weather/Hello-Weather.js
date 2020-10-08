@@ -71,7 +71,6 @@ var spacing = parseInt(inputArr[1]);
 // Load Your api in "".Get a free API key here: https://openweathermap.org/appid
 // 在 "" 内填写你的API—_KEY。在此处获取免费的API密钥：https://openweathermap.org/appid
 let API_WEATHER = "89065f71db2277c83d22a779a34f16a7"; 
-
 // add your city ID
 // 在 "" 内填入你的City ID。
 let CITY_WEATHER = "1809858";
@@ -211,8 +210,6 @@ let curLocation = await Location.current();
 console.log(curLocation.latitude);
 console.log(curLocation.longitude);*/
 
-// use "&units=imperial" for Farenheit or "&units=metric" for Celcius
-// “＆units = imperial”华氏度，“＆units = metric”摄氏度。
 let wetherurl = "http://api.openweathermap.org/data/2.5/weather?id=" + CITY_WEATHER + "&APPID=" + API_WEATHER + "&units=" + TEMPERATURE;
 //"http://api.openweathermap.org/data/2.5/weather?lat=" + curLocation.latitude + "&lon=" + curLocation.longitude + "&appid=" + API_WEATHER + "&units=metric";
 //"http://api.openweathermap.org/data/2.5/weather?id=" + CITY_WEATHER + "&APPID=" + API_WEATHER + "&units=metric"
@@ -356,7 +353,13 @@ function getBatteryLevel() {
 	const batteryAscii = Math.round(batteryLevel * 100);
 	return batteryAscii + "%";
 }
-
+function renderBattery() { 
+	const batteryLevel = Device.batteryLevel(); 
+	const juice = "▓".repeat(Math.floor(batteryLevel * 10)); 
+	const used = "░".repeat(10 - juice.length);
+	const batteryAscii = " " + juice + used + " " ; 
+	return batteryAscii; 
+}
 /*
  * YEAR PROGRESS
  * =============
@@ -364,17 +367,28 @@ function getBatteryLevel() {
 
 // Year Render
 // 年进度信息
-function renderYearProgress() {
+function getYearProgress() {
   const now = new Date()
   const start = new Date(now.getFullYear(), 0, 1) // Start of this year
   const end = new Date(now.getFullYear() + 1, 0, 1) // End of this year
-  const progress = (now - start) / (end - start)
-  return renderProgress(progress)
+  const yearPassed = (now - start)
+  const yearALL = (end - start)
+  const yearPercen = (yearPassed) / (yearALL)
+  const yearProgress = Math.round(yearPercen * 100);
+  return yearProgress + "%";
 }
-function renderProgress(progress) {
-  const used = '▓'.repeat(Math.floor(progress * 10))
-  const left = '░'.repeat(10 - used.length)
-  return `${used}${left} ${Math.floor(progress * 100)}%`
+function renderYear() {
+  const now = new Date()
+  const start = new Date(now.getFullYear(), 0, 1) // Start of this year
+  const end = new Date(now.getFullYear() + 1, 0, 1) // End of this year
+  const yearPassed = (now - start)
+  const yearALL = (end - start)
+  const yearPercen = (yearPassed) / (yearALL)
+  const yearAscii = yearPercen;  
+  const passed = '▓'.repeat(Math.floor(yearAscii * 10));
+  const left = '░'.repeat(10 - passed.length);
+  const yearProgress = " " + passed + left + " ";
+  return yearProgress;
 }
 
 // Try/catch for color input parameter
@@ -423,19 +437,36 @@ hStack0.addSpacer(0) //Left spacing,向左对齐间距
 
 // Year icon in stack
 // 年进度图标
-const YearProgressicon = hStack0.addText("◕ ")
-YearProgressicon.font = new Font('Menlo', 12) //font and size,字体与大小
+const YearProgressicon = hStack0.addText("📅 全年")
+YearProgressicon.font = Font.regularSystemFont(12) //font and size,字体与大小
 YearProgressicon.textColor = new Color('#8675a9') //font color,字体颜色
 YearProgressicon.textOpacity = (1); //opacity,不透明度
 YearProgressicon.leftAlignText(); //AlignText,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
 
 // Year label in stack
 // 年进度条、标签
-const YearProgress = hStack0.addText("全年 "+renderYearProgress()+" 𝒚𝒐𝒖 𝒅𝒊𝒅 𝒚𝒐𝒖𝒓 𝒃𝒆𝒔𝒕 𝒕𝒐𝒅𝒂𝒚?!")
+const YearProgress = hStack0.addText(renderYear())
 YearProgress.font = new Font('Menlo', 12) //font and size,字体与大小
 YearProgress.textColor = new Color('#8675a9') //font color,字体颜色
 YearProgress.textOpacity = (1); //opacity,不透明度
 YearProgress.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
+
+// Year percent in stack
+// 年进度百分比
+const YearPercentage = hStack0.addText(getYearProgress())
+YearPercentage.font = Font.regularSystemFont(12) //font and size,字体与大小
+YearPercentage.textColor = new Color('#8675a9') //font color,字体颜色
+YearPercentage.textOpacity = (1); //opacity,不透明度
+YearPercentage.leftAlignText(); //AlignText,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
+
+// Year slogan in stack
+// 年进度标语
+const YearSlogan = hStack0.addText(" 𝒚𝒐𝒖 𝒅𝒊𝒅 𝒚𝒐𝒖𝒓 𝒃𝒆𝒔𝒕 𝒕𝒐𝒅𝒂𝒚?!")
+YearSlogan.font = Font.regularSystemFont(14) //font and size,字体与大小
+YearSlogan.textColor = new Color('#8675a9') //font color,字体颜色
+YearSlogan.textOpacity = (1); //opacity,不透明度
+YearSlogan.leftAlignText(); //AlignText,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
+
 
 // Spacing between yearprogress and battery
 // 年进度与电量行间距
@@ -452,7 +483,7 @@ hStack1.addSpacer(0) //Left spacing,向左对齐间距
 // Battery icon in stack
 // 电量图标、标签、颜色
 const batteryicon = hStack1.addText("⚡ 电能");
-batteryicon.font = new Font('Menlo', 12); //font and size,字体与大小
+batteryicon.font = Font.regularSystemFont(12); //font and size,字体与大小
 if(Device.isCharging() && Device.batteryLevel() < 1){
   batteryicon.textColor = new Color('008891'); //font color,充电状态字体颜色
 }
@@ -504,12 +535,6 @@ else if(Device.batteryLevel() >= 0 && Device.batteryLevel() < 0.2 && !Device.isC
 }
 batteryLine.textOpacity = (1);//opacity,不透明度
 batteryLine.leftAlignText(); //Align,对齐方式(center,left,right)！在同一个stack内的对齐方式不能单独设置，只能调整向左对齐间距大小
-function renderBattery() { 
-const batteryLevel = Device.batteryLevel(); 
-const juice = "▓".repeat(Math.floor(batteryLevel * 10)); 
-const used = "░".repeat(10 - juice.length) 
-const batteryAscii = " " + juice + used + " " ; 
-return batteryAscii; }
 
 // Battery Status in stack
 // 电量状态、提示语
@@ -565,7 +590,7 @@ else if(Device.batteryLevel() <= 0.1 && Device.isCharging()){
 // Battery Status Color
 // 电量状态颜色
 let batterytext = hStack1.addText(battery);
-batterytext.font = new Font("Menlo", 12); //font and size,字体与大小
+batterytext.font = Font.regularSystemFont(12); //font and size,字体与大小
 if(Device.isCharging() && Device.batteryLevel() < 1){
   batterytext.textColor = new Color('008891'); //font color,充电状态字体颜色
 }
@@ -596,7 +621,7 @@ widgetHello.addSpacer(5);
 
 // Widget feel temp
 // 天气简报（最高温度与最低温度）
-let feel = weathername + " today" + "." + " It feels like " + Math.round(feel_like) + UNITS + ";" + " the high will be " + Math.round(highTemp) + UNITS;//"H:"+highTemp+"\u00B0"+" L:"+lowTemp+"\u00B0"
+let feel = weathername + " 𝙩𝙤𝙙𝙖𝙮" + "." + " 𝙄𝙩 𝙛𝙚𝙚𝙡𝙨 𝙡𝙞𝙠𝙚 " + Math.round(feel_like) + UNITS + ";" + " 𝙩𝙝𝙚 𝙝𝙞𝙜𝙝 𝙬𝙞𝙡𝙡 𝙗𝙚 " + Math.round(highTemp) + UNITS;//"H:"+highTemp+"\u00B0"+" L:"+lowTemp+"\u00B0"
 var hltemptext = widgetHello.addText(feel);
 hltemptext.font = Font.regularSystemFont(12); //font and size,字体与大小
 hltemptext.textColor = new Color('#51adcf'); //font color,字体颜色
