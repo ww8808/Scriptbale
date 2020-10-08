@@ -39,7 +39,7 @@ align=center>
 align=center>
 
 在充电中：
-<img src="https://github.com/xkerwin/Scriptbale/blob/main/image/充满电提示.jpg" width = "400" height = "175" alt="充电中" 
+<img src="https://github.com/xkerwin/Scriptbale/blob/main/image/充满中.jpg" width = "400" height = "175" alt="充电中" 
 align=center>
 
 ### Tanks 
