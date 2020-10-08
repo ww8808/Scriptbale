@@ -463,18 +463,33 @@ else if(Device.batteryLevel() >= 0.5 && Device.batteryLevel() <= 0.6){
 else if(Device.batteryLevel() >= 0.4 && Device.batteryLevel() <= 0.5 && !Device.isCharging()){
   battery = battery + " 电量用了一半,有时间就充电啦!";
 }
+else if(Device.batteryLevel() >= 0.4 && Device.batteryLevel() <= 0.5 && Device.isCharging()){
+	battery = battery + " 正在充入电能中...";
+  }
 else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() <= 0.4 && !Device.isCharging()){
   battery = battery + " 电量用了大半了,尽快充电啦!";
 }
+else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() <= 0.4 && Device.isCharging()){
+	battery = battery + " 正在充入电能中...";
+  }
 else if(Device.batteryLevel() >= 0.2 && Device.batteryLevel() <= 0.3 && !Device.isCharging()){
   battery = battery + " 电量很快用完,赶紧充电啦!";
 }
+else if(Device.batteryLevel() >= 0.2 && Device.batteryLevel() <= 0.3 && Device.isCharging()){
+	battery = battery + " 正在快速充入电能中...";
+  }
 else if(Device.batteryLevel() >= 0.1 && Device.batteryLevel() <= 0.2 && !Device.isCharging()){
   battery = battery + " 电量就剩不到20%了,尽快充电!";
 }
+else if(Device.batteryLevel() >= 0.1 && Device.batteryLevel() <= 0.2 && Device.isCharging()){
+	battery = battery + " 正在快速充入电能中...";
+  }
 else if(Device.batteryLevel() <= 0.1 && !Device.isCharging()){
-  battery = battery + " 电量快耗尽,再不充电我就关机了!";
+  battery = battery + " 电量将耗尽,再不充电我就关机了!";
 }
+else if(Device.batteryLevel() <= 0.1 && Device.isCharging()){
+	battery = battery + " 正在快速充入电能中...";
+  }
 let batterytext = hStack1.addText(battery);
 batterytext.font = new Font("Menlo", 12); //font and size,字体与大小
 if(Device.isCharging() && Device.batteryLevel() < 1){
