@@ -15,6 +15,8 @@
 ```
 3.下载`Hello-Weather.js`到Scriptable
 4.点击运行脚本，根据提示操作即可。
+
+
 充电中：
 <img src="https://github.com/xkerwin/Scriptbale/blob/main/image/充满电提示.jpg?raw=true" width = "400" height = "175" alt="充电中" 
 align=center>
