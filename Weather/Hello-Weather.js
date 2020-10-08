@@ -58,8 +58,8 @@ if (fm.fileExists(backgroundImageURLInput) == false) {
 var spacing = parseInt(inputArr[1]);
 
 //API_KEY
-let API_WEATHER = "XXXXXXXXXXXXXXXXXXXXXXXXXXXX";//Load Your api here,填入你自己的API
-let CITY_WEATHER = "XXXXXXX";//add your city ID,填入你所在城市的7位数字City ID
+let API_WEATHER = "89065f71db2277c83d22a779a34f16a7";//Load Your api here,填入你自己的API
+let CITY_WEATHER = "1809858";//add your city ID,填入你所在城市的7位数字City ID
 
 //Get storage
 var base_path = "/var/mobile/Library/Mobile Documents/iCloud~dk~simonbs~Scriptable/Documents/weather/";
@@ -391,16 +391,16 @@ if(Device.isCharging() && Device.batteryLevel() == 1){
 else if(Device.batteryLevel() >= 0.8 && Device.batteryLevel() <= 1 && !Device.isCharging()){
   batteryicon.textColor = new Color('c4fb6d'); //font color,电量充足字体颜色
 }
-else if(Device.batteryLevel() >= 0.5 && Device.batteryLevel() <= 8 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0.5 && Device.batteryLevel() < 0.-8 && !Device.isCharging()){
   batteryicon.textColor = new Color('d3de32'); //font color,电量正常字体颜色
 }
-else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() <= 0.5 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() <0.5 && !Device.isCharging()){
   batteryicon.textColor = new Color('e5df88'); //font color,电量偏低字体颜色
 }
-else if(Device.batteryLevel() >= 0.1 && Device.batteryLevel() <= 0.3 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0.2 && Device.batteryLevel() < 0.3 && !Device.isCharging()){
   batteryicon.textColor = new Color('ffd571'); //font color,电量低字体颜色
 }
-else if(Device.batteryLevel() >= 0 && Device.batteryLevel() <= 0.1 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0 && Device.batteryLevel() < 0.2 && !Device.isCharging()){
   batteryicon.textColor = new Color('ec0101'); //font color,电量不足字体颜色
 }
 
@@ -419,16 +419,16 @@ if(Device.isCharging() && Device.batteryLevel() == 1){
 else if(Device.batteryLevel() >= 0.8 && Device.batteryLevel() <= 1 && !Device.isCharging()){
   batteryLine.textColor = new Color('c4fb6d'); //font color,电量充足字体颜色
 }
-else if(Device.batteryLevel() >= 0.5 && Device.batteryLevel() <= 8 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0.5 && Device.batteryLevel() < 0.8 && !Device.isCharging()){
   batteryLine.textColor = new Color('d3de32'); //font color,电量正常字体颜色
 }
-else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() <= 0.5 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() < 0.5 && !Device.isCharging()){
   batteryLine.textColor = new Color('e5df88'); //font color,电量偏低字体颜色
 }
-else if(Device.batteryLevel() >= 0.1 && Device.batteryLevel() <= 0.3 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0.2 && Device.batteryLevel() <= 0.3 && !Device.isCharging()){
   batteryLine.textColor = new Color('ffd571'); //font color,电量低字体颜色
 }
-else if(Device.batteryLevel() >= 0 && Device.batteryLevel() <= 0.1 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0 && Device.batteryLevel() < 0.2 && !Device.isCharging()){
   batteryLine.textColor = new Color('ec0101'); //font color,电量不足字体颜色
 }
 batteryLine.textOpacity = (1);//opacity,不透明度
@@ -486,16 +486,16 @@ if(Device.isCharging() && Device.batteryLevel() == 1){
 else if(Device.batteryLevel() >= 0.8 && Device.batteryLevel() <= 1 && !Device.isCharging()){
   batterytext.textColor = new Color('c4fb6d'); //font color,电量充足字体颜色
 }
-else if(Device.batteryLevel() >= 0.5 && Device.batteryLevel() <= 8 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0.5 && Device.batteryLevel() < 0.8 && !Device.isCharging()){
   batterytext.textColor = new Color('d3de32'); //font color,电量正常字体颜色
 }
-else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() <= 0.5 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0.3 && Device.batteryLevel() < 0.5 && !Device.isCharging()){
   batterytext.textColor = new Color('e5df88'); //font color,电量偏低字体颜色
 }
-else if(Device.batteryLevel() >= 0.1 && Device.batteryLevel() <= 0.3 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0.2 && Device.batteryLevel() < 0.3 && !Device.isCharging()){
   batterytext.textColor = new Color('ffd571'); //font color,电量低字体颜色
 }
-else if(Device.batteryLevel() >= 0 && Device.batteryLevel() <= 0.1 && !Device.isCharging()){
+else if(Device.batteryLevel() >= 0 && Device.batteryLevel() < 0.2 && !Device.isCharging()){
   batterytext.textColor = new Color('ec0101'); //font color,电量不足字体颜色
 }
 batterytext.textOpacity = (1); //opacity,不透明度
