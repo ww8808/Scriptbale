@@ -15,10 +15,11 @@
 ```
 3.下载`Hello-Weather.js`到Scriptable
 4.点击运行脚本，根据提示操作即可。
-
-<img src="https://github.com/xkerwin/Scriptbale-Weather/blob/main/image/charging.PNG?raw=true" width = "200" height = "400" alt="充电中" 
+充电中：
+<img src="https://github.com/xkerwin/Scriptbale/blob/main/image/充满电提示.jpg?raw=true" width = "200" height = "400" alt="充电中" 
 align=center>
-<img src="https://github.com/xkerwin/Scriptbale-Weather/blob/main/image/full%20charge.PNG?raw=true" width = "200" height = "400" alt="充满电" 
+电量充足：
+<img src="https://github.com/xkerwin/Scriptbale/blob/main/image/电量充足.jpg" width = "200" height = "400" alt="电量充足" 
 align=center>
 
 ### Tanks 
