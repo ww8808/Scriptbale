@@ -34,11 +34,11 @@ align=center>
 电量不足：
 <img src="https://github.com/xkerwin/Scriptbale/blob/main/image/电量不足.jpg" width = "400" height = "175" alt="电量不足" 
 align=center>
-  充满电：
+当充满电：
 <img src="https://github.com/xkerwin/Scriptbale/blob/main/image/充满电提示.jpg" width = "400" height = "175" alt="充满电提示" 
 align=center>
 
-  充电中：
+在充电中：
 <img src="https://github.com/xkerwin/Scriptbale/blob/main/image/充满电提示.jpg" width = "400" height = "175" alt="充电中" 
 align=center>
 
