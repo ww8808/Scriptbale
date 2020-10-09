@@ -70,10 +70,10 @@ var spacing = parseInt(inputArr[1]);
 
 // Load Your api in "".Get a free API key here: https://openweathermap.org/appid
 // 在 "" 内填写你的API—_KEY。在此处获取免费的API密钥：https://openweathermap.org/appid
-let API_WEATHER = "89065f71db2277c83d22a779a34f16a7"; 
+let API_WEATHER = "2471db970bf238065531d12e2a588961"; 
 // add your city ID
 // 在 "" 内填入你的City ID。
-let CITY_WEATHER = "1809858";
+let CITY_WEATHER = "1810821";
 
 // Set to imperial for Fahrenheit, or metric for Celsius
 // 华氏度设置为英制imperial，摄氏度设置为公制metric
